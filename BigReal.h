@@ -9,11 +9,12 @@ private:
     static bool ValidReal (string);
 public:
     BigReal(string);
+    BigReal();
     BigReal operator+ (BigReal& other); 
     BigReal operator- (BigReal& other); 
-    bool operator<  (BigReal othe);     
-    bool operator>  (BigReal othe);    
-    bool operator== (BigReal othe);
+    bool operator<  (BigReal other);
+    bool operator>  (BigReal other);
+    bool operator== (BigReal other);
     void print();
 
 };
