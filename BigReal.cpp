@@ -2,6 +2,12 @@
 #include "BigReal.h"
 using namespace std;
 
+BigReal :: BigReal(){
+    sign = '+';
+    integer = "0";
+    fraction = ".0";
+}
+
 BigReal :: BigReal(string num){
     int start;
     if(num[0] == '-'){
@@ -27,9 +33,9 @@ BigReal :: BigReal(string num){
         }
     }
     if(ValidReal(num)){
-        cout <<"Yes\n";
+        cout <<"It's Real Number\n";
     }
-    else cout <<"No\n";
+    else cout <<"It's not a Real Number\n";
 
 }
 
@@ -72,7 +78,11 @@ bool BigReal :: ValidReal (string num){
     else return false;
 }
 
+
 void BigReal :: print(){
     cout << sign << integer << fraction <<"\n";
-    
+}
+
+bool BigReal :: operator== (BigReal other){
+    return (other.sign == sign  && other.integer == integer && other.fraction == fraction);
 }
