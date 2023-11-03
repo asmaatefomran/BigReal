@@ -10,8 +10,6 @@ private:
 public:
     BigReal(string);
     BigReal();
-    BigReal (const BigReal& other);
-    BigReal operator= (BigReal& other);
     BigReal operator+ (BigReal& other); 
     BigReal operator- (BigReal& other); 
     bool operator<  (BigReal other);
