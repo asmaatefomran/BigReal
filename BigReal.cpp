@@ -42,17 +42,8 @@ BigReal :: BigReal(string num){
 bool BigReal :: ValidReal (string num){
     int positive = 0, negative = 0, dot = 0, digit = 0, charct = 0;
     int len = num.length();
-    int start;
-    if(num[0] == '-'){
-        negative++; start = 1;
-    }
-    else if (num[0] == '+'){
-        positive++; start = 1;
-    }
-    else{
-        positive++; start = 0;
-    }
-    for(int i = start; i < len; i++){
+
+    for(int i = 0; i < len; i++){
         if(num[i] == '+'){
             positive++;
         }
