@@ -11,7 +11,6 @@ BigReal :: BigReal(){
 BigReal :: BigReal(double number){
     string num = to_string(number);
     num.pop_back();
-    cout << num <<"\n";
     int start;
     if(num[0] == '-'){
         sign ='-'; start = 1;
