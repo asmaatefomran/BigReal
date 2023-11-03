@@ -39,6 +39,18 @@ BigReal :: BigReal(string num){
 
 }
 
+BigReal :: BigReal (const BigReal& other){
+    sign = other.sign;
+    integer = other.integer;
+    fraction = other.fraction;
+}
+
+BigReal BigReal :: operator= (BigReal& other){
+    sign = other.sign;
+    integer = other.integer;
+    fraction = other.fraction;
+}
+
 bool BigReal :: ValidReal (string num){
     int positive = 0, negative = 0, dot = 0, digit = 0, charct = 0;
     int len = num.length();
