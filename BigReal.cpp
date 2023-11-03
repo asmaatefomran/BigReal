@@ -99,12 +99,38 @@ bool BigReal :: operator== (BigReal other){
     return (other.sign == sign  && other.integer == integer && other.fraction == fraction);
 }
 //----------------------------------------------------------------------------------------------------------------------
+//function to do basic addition between two bigreals with the same sign
+BigReal BigReal :: sum(BigReal n1, BigReal n2){
+    int reminder=0;
+    BigReal ans;
+    //sum the fractions
+    for(int i= n1.fraction.size()-1;i>=0 ;i--){
+        reminder= (n1.fraction[i]-'0')+(n1.fraction[i]-'0')+reminder;
+        ans.fraction= char((reminder%10)+'0')+ans.fraction;
+        reminder/=10;
+    }
+    for(int i= n1.integer.size()-1;i>=0 ;i--){
+        reminder= (n1.integer[i]-'0')+(n1.integer[i]-'0')+reminder;
+        ans.integer= char((reminder%10)+'0')+ans.integer;
+        reminder/=10;
+    }
+    if(reminder)ans.integer='1'+ans.integer;
+    return ans;
+}
+//----------------------------------------------------------------------------------------------------------------------
+//function to do basic substraction between two bigreals with the same sign
+BigReal BigReal :: sub(BigReal n1, BigReal n2){
+    int carry=0;
+    BigReal ans;
+}
 //operator overloading + to get the sum of two bigreals
 BigReal BigReal :: operator+(BigReal &other) {
     BigReal temp;
+    int reminder=0;
     while(integer.size()>other.integer.size())'0'+other.integer;
     while(integer.size()<other.integer.size())'0'+integer;
     while(fraction.size()>other.fraction.size())other.fraction+'0';
     while(fraction.size()<other.fraction.size())fraction+'0';
+
 
 }
