@@ -10,6 +10,8 @@ private:
 public:
     BigReal(string);
     BigReal();
+    BigReal (const BigReal& other);
+    BigReal operator= (BigReal& other);
     BigReal sum(BigReal n1, BigReal n2);
     BigReal sub(BigReal n1, BigReal n2);
     BigReal operator+ (BigReal& other); 
