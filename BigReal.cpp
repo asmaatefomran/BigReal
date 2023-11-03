@@ -121,6 +121,7 @@ BigReal BigReal :: sum(BigReal n1, BigReal n2){
         ans.fraction= char((reminder%10)+'0')+ans.fraction;
         reminder/=10;
     }
+    //sum the integers
     for(int i= n1.integer.size()-1;i>=0 ;i--){
         reminder= (n1.integer[i]-'0')+(n1.integer[i]-'0')+reminder;
         ans.integer= char((reminder%10)+'0')+ans.integer;
@@ -134,6 +135,27 @@ BigReal BigReal :: sum(BigReal n1, BigReal n2){
 BigReal BigReal :: sub(BigReal n1, BigReal n2){
     int carry=0;
     BigReal ans;
+    //substracte the fractions
+    for(int i= n1.fraction.size()-1 ;i>=0;i--){
+        int a=(n1.fraction[i]-'0')-(n2.fraction[i]-'0')-carry;
+        if(a<0) {
+            carry = 1;
+            a += 10;
+        }
+        else carry=0;
+        ans.fraction=char(a+'0')+ans.fraction;
+    }
+    //substracte the integers
+    for(int i= n1.integer.size()-1 ;i>=0;i--){
+        int a=(n1.integer[i]-'0')-(n2.integer[i]-'0')-carry;
+        if(a<0) {
+            carry = 1;
+            a += 10;
+        }
+        else carry=0;
+        ans.integer=char(a+'0')+ans.integer;
+    }
+    return ans;
 }
 //operator overloading + to get the sum of two bigreals
 BigReal BigReal :: operator+(BigReal &other) {
@@ -143,6 +165,7 @@ BigReal BigReal :: operator+(BigReal &other) {
     while(integer.size()<other.integer.size())'0'+integer;
     while(fraction.size()>other.fraction.size())other.fraction+'0';
     while(fraction.size()<other.fraction.size())fraction+'0';
+
 
 
 }
