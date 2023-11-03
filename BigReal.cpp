@@ -78,11 +78,20 @@ bool BigReal :: ValidReal (string num){
     else return false;
 }
 
-
 void BigReal :: print(){
     cout << sign << integer << fraction <<"\n";
 }
 
 bool BigReal :: operator== (BigReal other){
     return (other.sign == sign  && other.integer == integer && other.fraction == fraction);
+}
+//----------------------------------------------------------------------------------------------------------------------
+//operator overloading + to get the sum of two bigreals
+BigReal BigReal :: operator+(BigReal &other) {
+    BigReal temp;
+    while(integer.size()>other.integer.size())'0'+other.integer;
+    while(integer.size()<other.integer.size())'0'+integer;
+    while(fraction.size()>other.fraction.size())other.fraction+'0';
+    while(fraction.size()<other.fraction.size())fraction+'0';
+
 }
