@@ -8,8 +8,9 @@ private:
     string integer, fraction;
     static bool ValidReal (string);
 public:
-    BigReal(string);
     BigReal();
+    BigReal(double);
+    BigReal(string);
     BigReal (const BigReal& other);
     BigReal operator= (BigReal& other);
     BigReal sum(BigReal n1, BigReal n2);

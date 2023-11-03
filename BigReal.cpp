@@ -8,6 +8,39 @@ BigReal :: BigReal(){
     fraction = ".0";
 }
 
+BigReal :: BigReal(double number){
+    string num = to_string(number);
+    num.pop_back();
+    cout << num <<"\n";
+    int start;
+    if(num[0] == '-'){
+        sign ='-'; start = 1;
+    }
+    else if (num[0] == '+'){
+        sign ='+'; start = 1;
+    }
+    else{
+        sign ='+'; start = 0;
+    }
+    int len = num.length();
+    int point = -1;
+    for(int i = start; i < len; i++){
+        if(num[i] == '.'){
+            point = i; fraction.push_back('.'); continue;
+        }
+        if(point == -1){
+            integer.push_back(num[i]);
+        }
+        if(point != -1){
+            fraction.push_back(num[i]);
+        }
+    }
+    if(ValidReal(num)){
+        cout <<"It's Real Number\n";
+    }
+    else cout <<"It's not a Real Number\n";
+}
+
 BigReal :: BigReal(string num){
     int start;
     if(num[0] == '-'){
@@ -49,6 +82,7 @@ BigReal BigReal :: operator= (BigReal& other){
     sign = other.sign;
     integer = other.integer;
     fraction = other.fraction;
+    return other;
 }
 
 bool BigReal :: ValidReal (string num){
