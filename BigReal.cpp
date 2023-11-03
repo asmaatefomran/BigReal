@@ -11,7 +11,7 @@ BigReal :: BigReal(){
 BigReal :: BigReal(double number){
     string num = to_string(number);
     num.pop_back();
-    cout << num <<"\n";
+    //cout << num <<"\n";
     int start;
     if(num[0] == '-'){
         sign ='-'; start = 1;
@@ -150,13 +150,15 @@ bool BigReal :: operator== (BigReal other){
 BigReal BigReal :: sum(const  BigReal n1, BigReal n2){
     int reminder=0;
     BigReal ans;
+    ans.integer.clear();
+    ans.fraction.clear();
     //sum the fractions
     for(int i= n1.fraction.size()-1;i>=1 ;i--){
         reminder= (n1.fraction[i]-'0')+(n2.fraction[i]-'0')+reminder;
         ans.fraction= char((reminder%10)+'0')+ans.fraction;
         reminder/=10;
     }
-    ans.fraction= '.'+ans.fraction;
+   ans.fraction= '.'+ans.fraction;
     //sum the integers
     for(int i= n1.integer.size()-1;i>=0 ;i--){
         reminder= (n1.integer[i]-'0')+(n2.integer[i]-'0')+reminder;
@@ -171,8 +173,10 @@ BigReal BigReal :: sum(const  BigReal n1, BigReal n2){
 BigReal BigReal :: sub(const BigReal n1, BigReal n2){
     int carry=0;
     BigReal ans;
+    ans.integer.clear();
+    ans.fraction.clear();
     //substracte the fractions
-    for(int i= n1.fraction.size()-1 ;i>=0;i--){
+    for(int i= n1.fraction.size()-1 ;i>=1;i--){
         int a=(n1.fraction[i]-'0')-(n2.fraction[i]-'0')-carry;
         if(a<0) {
             carry = 1;
@@ -196,92 +200,90 @@ BigReal BigReal :: sub(const BigReal n1, BigReal n2){
 }
 //----------------------------------------------------------------------------------------------------------------------
 //operator overloading + to get the sum of two bigreals
-BigReal BigReal :: operator+(const BigReal& otherr) {
-    BigReal temp,now,other;
-    other=otherr;
-    now.sign=sign;
-    now.integer=integer;
-    now.fraction=fraction;
+BigReal BigReal::operator+(const BigReal& otherr) {
+    BigReal temp;
+    BigReal now, other;
+    other = otherr;
+    same_len(other);
+    now = *this;
 
-    while(now.integer.size()>other.integer.size())'0'+other.integer;
-    while(now.integer.size()<other.integer.size())'0'+now.integer;
-    while(now.fraction.size()>other.fraction.size())other.fraction+'0';
-    while(now.fraction.size()<other.fraction.size())now.fraction+'0';
-    if(now.sign==other.sign){
-       temp.integer=sum(now,other).integer;
-       temp.fraction=sum(now,other).fraction;
-       temp.sign=now.sign;
+    // Ensure both numbers have the same length for integer and fractional parts
+    while (now.integer.size() < other.integer.size())
+        now.integer = '0' + now.integer;
+    while (now.integer.size() > other.integer.size())
+        other.integer = '0' + other.integer;
+    while (now.fraction.size() < other.fraction.size())
+        now.fraction = now.fraction + '0';
+    while (now.fraction.size() > other.fraction.size())
+        other.fraction = other.fraction + '0';
+
+    if (now.sign == other.sign) {
+        temp= sum(now, other);
+        //temp.sign = now.sign;
     }
-    else if(now.sign == '-' && other.sign=='+'){
-        if(other.integer >= now.integer||(other.integer == now.integer && other.fraction >= now.fraction)){
-            temp.integer=sub(other,now).integer;
-            temp.fraction=sub(other,now).fraction;
-            temp.sign='+';
+    else if (now.sign == '-' && other.sign == '+') {
+        if (other.integer >= now.integer || (other.integer == now.integer && other.fraction >= now.fraction)) {
+            temp= sub(other, now);
+            temp.sign = '+';
         }
         else {
-            temp.integer = sub(now,other).integer;
-            temp.fraction = sub(now,other).fraction;
-            temp.sign='-';
+            temp = sub(now, other);
+            temp.sign = '-';
         }
     }
-    else if(now.sign == '+' && other.sign=='-'){
-        if(other.integer > now.integer||(other.integer == now.integer && other.fraction > now.fraction)){
-            temp.integer=sub(other,now).integer;
-            temp.fraction=sub(other,now).fraction;
-            temp.sign='-';
+    else if (now.sign == '+' && other.sign == '-') {
+        if (other.integer > now.integer || (other.integer == now.integer && other.fraction > now.fraction)) {
+            temp = sub(other, now);
+            temp.sign = '-';
         }
         else {
-            temp.integer = sub(now,other).integer;
-            temp.fraction = sub(now,other).fraction;
-            temp.sign='+';
+            temp = sub(now, other);
+            temp.sign = '+';
         }
     }
     return temp;
 }
-//----------------------------------------------------------------------------------------------------------------------
-//operator overloading + to get the sum of two bigreals
-BigReal BigReal :: operator-(const BigReal& otherr) {
+
+BigReal BigReal::operator-(const BigReal& otherr) {
     BigReal temp;
-    BigReal now,other;
-    other=otherr;
-    now.sign = sign;
-    now.integer = integer;
-    now.fraction = fraction;
+    BigReal now, other;
+    other = otherr;
+    same_len(other);
+    now = *this;
 
-    while (now.integer.size() > other.integer.size())'0' + other.integer;
-    while (now.integer.size() < other.integer.size())'0' + now.integer;
-    while (now.fraction.size() > other.fraction.size())other.fraction + '0';
-    while (now.fraction.size() < other.fraction.size())now.fraction + '0';
+    // Ensure both numbers have the same length for integer and fractional parts
 
-    if (now.sign != other.sign) {
-        temp.integer = sum(now, other).integer;
-        temp.fraction = sum(now, other).fraction;
+    if (now.sign =='-' &&other.sign=='+') {
+        temp = sum(now, other);
+        temp.sign = '-';
+    }
+    else if (now.sign =='+' &&other.sign=='-') {
+        temp = sum(now, other);
         temp.sign = '+';
     }
-    else if(now.sign==other.sign=='+'){
-        if(now.integer >= other.integer||(now.integer == other.integer &&now.fraction >= other.fraction)){
-            temp.integer = sub(now,other).integer;
-            temp.fraction = sub(now,other).fraction;
-            temp.sign='+';
+    else if (now.sign == other.sign &&other.sign== '+') {
+        if (now.integer >= other.integer || (now.integer == other.integer && now.fraction >= other.fraction)) {
+            temp.integer = sub(now, other).integer;
+            temp.fraction = sub(now, other).fraction;
+            temp.sign = '+';
         }
         else {
-            temp.integer=sub(other,now).integer;
-            temp.fraction=sub(other,now).fraction;
-            temp.sign='-';
+            temp.integer = sub(other, now).integer;
+            temp.fraction = sub(other, now).fraction;
+            temp.sign = '-';
         }
     }
-    else if(now.sign==other.sign=='-'){
-        if(now.integer > other.integer||(now.integer == other.integer &&now.fraction > other.fraction)) {
+    else if (now.sign == other.sign && other.sign== '-') {
+        if (now.integer > other.integer || (now.integer == other.integer && now.fraction > other.fraction)) {
             temp.integer = sub(now, other).integer;
             temp.fraction = sub(now, other).fraction;
             temp.sign = '-';
         }
         else {
-            temp.integer=sub(other,now).integer;
-            temp.fraction=sub(other,now).fraction;
-            temp.sign='+';
+            temp.integer = sub(other, now).integer;
+            temp.fraction = sub(other, now).fraction;
+            temp.sign = '+';
         }
     }
     return temp;
-
 }
