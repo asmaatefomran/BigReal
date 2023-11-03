@@ -213,7 +213,7 @@ BigReal BigReal :: operator+(const BigReal& otherr) {
        temp.sign=now.sign;
     }
     else if(now.sign == '-' && other.sign=='+'){
-        if(other.integer[0]-'0' >= now.integer[0]-'0'){
+        if(other.integer >= now.integer){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='+';
@@ -225,7 +225,7 @@ BigReal BigReal :: operator+(const BigReal& otherr) {
         }
     }
     else if(now.sign == '+' && other.sign=='-'){
-        if(other.integer[0]-'0' > now.integer[0]-'0'){
+        if(other.integer > now.integer){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='-';
@@ -259,7 +259,7 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
         temp.sign = '+';
     }
     else if(now.sign==other.sign=='+'){
-        if(now.integer[0]-'0' >= other.integer[0]-'0'){
+        if(now.integer >= other.integer){
             temp.integer = sub(now,other).integer;
             temp.fraction = sub(now,other).fraction;
             temp.sign='+';
@@ -271,7 +271,7 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
         }
     }
     else if(now.sign==other.sign=='-'){
-        if(now.integer[0]-'0' > other.integer[0]-'0'){
+        if(now.integer > other.integer){
             temp.integer = sub(now,other).integer;
             temp.fraction = sub(now,other).fraction;
             temp.sign='-';
