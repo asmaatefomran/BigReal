@@ -72,17 +72,18 @@ BigReal :: BigReal(string num){
 
 }
 
-BigReal :: BigReal (const BigReal& other){
+BigReal :: BigReal ( BigReal& other){
     sign = other.sign;
     integer = other.integer;
     fraction = other.fraction;
 }
 
-BigReal BigReal :: operator= (BigReal& other){
+BigReal& BigReal :: operator= (const BigReal& other){
+    BigReal ob=*this;
     sign = other.sign;
     integer = other.integer;
     fraction = other.fraction;
-    return other;
+    return *this;
 }
 
 bool BigReal :: ValidReal (string num){
@@ -146,15 +147,16 @@ bool BigReal :: operator== (BigReal other){
 }
 //----------------------------------------------------------------------------------------------------------------------
 //function to do basic addition between two bigreals with the same sign
-BigReal BigReal :: sum( BigReal n1, BigReal n2){
+BigReal BigReal :: sum(const  BigReal n1, BigReal n2){
     int reminder=0;
     BigReal ans;
     //sum the fractions
-    for(int i= n1.fraction.size()-1;i>=0 ;i--){
+    for(int i= n1.fraction.size()-1;i>=1 ;i--){
         reminder= (n1.fraction[i]-'0')+(n2.fraction[i]-'0')+reminder;
         ans.fraction= char((reminder%10)+'0')+ans.fraction;
         reminder/=10;
     }
+    ans.fraction= '.'+ans.fraction;
     //sum the integers
     for(int i= n1.integer.size()-1;i>=0 ;i--){
         reminder= (n1.integer[i]-'0')+(n2.integer[i]-'0')+reminder;
@@ -166,7 +168,7 @@ BigReal BigReal :: sum( BigReal n1, BigReal n2){
 }
 //----------------------------------------------------------------------------------------------------------------------
 //function to do basic substraction between two bigreals with the same sign
-BigReal BigReal :: sub(BigReal n1, BigReal n2){
+BigReal BigReal :: sub(const BigReal n1, BigReal n2){
     int carry=0;
     BigReal ans;
     //substracte the fractions
@@ -179,6 +181,7 @@ BigReal BigReal :: sub(BigReal n1, BigReal n2){
         else carry=0;
         ans.fraction=char(a+'0')+ans.fraction;
     }
+    ans.fraction= '.'+ans.fraction;
     //substracte the integers
     for(int i= n1.integer.size()-1 ;i>=0;i--){
         int a=(n1.integer[i]-'0')-(n2.integer[i]-'0')-carry;
@@ -193,8 +196,9 @@ BigReal BigReal :: sub(BigReal n1, BigReal n2){
 }
 //----------------------------------------------------------------------------------------------------------------------
 //operator overloading + to get the sum of two bigreals
-BigReal BigReal :: operator+(BigReal &other) {
-    BigReal temp,now;
+BigReal BigReal :: operator+(const BigReal& otherr) {
+    BigReal temp,now,other;
+    other=otherr;
     now.sign=sign;
     now.integer=integer;
     now.fraction=fraction;
@@ -209,7 +213,7 @@ BigReal BigReal :: operator+(BigReal &other) {
        temp.sign=now.sign;
     }
     else if(now.sign == '-' && other.sign=='+'){
-        if(other.integer[0] >= now.integer[0]){
+        if(other.integer[0]-'0' >= now.integer[0]-'0'){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='+';
@@ -221,7 +225,7 @@ BigReal BigReal :: operator+(BigReal &other) {
         }
     }
     else if(now.sign == '+' && other.sign=='-'){
-        if(other.integer[0] > now.integer[0]){
+        if(other.integer[0]-'0' > now.integer[0]-'0'){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='-';
@@ -236,8 +240,10 @@ BigReal BigReal :: operator+(BigReal &other) {
 }
 //----------------------------------------------------------------------------------------------------------------------
 //operator overloading + to get the sum of two bigreals
-BigReal BigReal :: operator-(BigReal &other) {
-    BigReal temp, now;
+BigReal BigReal :: operator-(const BigReal& otherr) {
+    BigReal temp;
+    BigReal now,other;
+    other=otherr;
     now.sign = sign;
     now.integer = integer;
     now.fraction = fraction;
@@ -253,7 +259,7 @@ BigReal BigReal :: operator-(BigReal &other) {
         temp.sign = '+';
     }
     else if(now.sign==other.sign=='+'){
-        if(now.integer[0] >= other.integer[0]){
+        if(now.integer[0]-'0' >= other.integer[0]-'0'){
             temp.integer = sub(now,other).integer;
             temp.fraction = sub(now,other).fraction;
             temp.sign='+';
@@ -265,7 +271,7 @@ BigReal BigReal :: operator-(BigReal &other) {
         }
     }
     else if(now.sign==other.sign=='-'){
-        if(now.integer[0] > other.integer[0]){
+        if(now.integer[0]-'0' > other.integer[0]-'0'){
             temp.integer = sub(now,other).integer;
             temp.fraction = sub(now,other).fraction;
             temp.sign='-';

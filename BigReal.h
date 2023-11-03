@@ -11,12 +11,12 @@ public:
     BigReal();
     BigReal(double);
     BigReal(string);
-    BigReal (const BigReal& other);
-    BigReal operator= (BigReal& other);
-    BigReal sum(BigReal n1, BigReal n2);
-    BigReal sub(BigReal n1, BigReal n2);
-    BigReal operator+ (BigReal& other); 
-    BigReal operator- (BigReal& other); 
+    BigReal ( BigReal& other);
+    BigReal& operator= (const BigReal& other);
+    BigReal sum(const BigReal n1, BigReal n2);
+    BigReal sub(const BigReal n1, BigReal n2);
+    BigReal  operator+(const BigReal& other);
+    BigReal  operator-(const BigReal& other);
     bool operator<  (BigReal other);
     bool operator>  (BigReal other);
     bool operator== (BigReal other);
