@@ -73,6 +73,28 @@ void BigReal :: print(){
     cout << sign << integer << fraction <<"\n";
 }
 
+void BigReal :: same_len(BigReal& other){
+    int len = max(integer.length(), other.integer.length());
+    int len1 = integer.length();
+    int len2 = other.integer.length();
+    for(int i = len1; i < len; i++){
+        integer = "0" + integer;
+    }
+    for(int i = len2; i < len; i++){
+        other.integer = "0" + other.integer;
+    }
+
+    int f = max(fraction.length(), other.fraction.length()) ;
+    int f1 = fraction.length() ;
+    int f2 = other.fraction.length() ;
+    for(int i = f1; i < f; i++){
+        fraction.push_back('0');
+    }
+    for(int i = f2; i < f; i++){
+        other.fraction.push_back('0');
+    }
+}
+
 bool BigReal :: operator== (BigReal other){
     return (other.sign == sign  && other.integer == integer && other.fraction == fraction);
 }
