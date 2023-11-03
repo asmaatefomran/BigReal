@@ -213,7 +213,7 @@ BigReal BigReal :: operator+(const BigReal& otherr) {
        temp.sign=now.sign;
     }
     else if(now.sign == '-' && other.sign=='+'){
-        if(other.integer >= now.integer){
+        if(other.integer >= now.integer||(other.integer == now.integer && other.fraction >= now.fraction)){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='+';
@@ -225,7 +225,7 @@ BigReal BigReal :: operator+(const BigReal& otherr) {
         }
     }
     else if(now.sign == '+' && other.sign=='-'){
-        if(other.integer > now.integer){
+        if(other.integer > now.integer||(other.integer == now.integer && other.fraction > now.fraction)){
             temp.integer=sub(other,now).integer;
             temp.fraction=sub(other,now).fraction;
             temp.sign='-';
@@ -259,7 +259,7 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
         temp.sign = '+';
     }
     else if(now.sign==other.sign=='+'){
-        if(now.integer >= other.integer){
+        if(now.integer >= other.integer||(now.integer == other.integer &&now.fraction >= other.fraction)){
             temp.integer = sub(now,other).integer;
             temp.fraction = sub(now,other).fraction;
             temp.sign='+';
@@ -271,10 +271,10 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
         }
     }
     else if(now.sign==other.sign=='-'){
-        if(now.integer > other.integer){
-            temp.integer = sub(now,other).integer;
-            temp.fraction = sub(now,other).fraction;
-            temp.sign='-';
+        if(now.integer > other.integer||(now.integer == other.integer &&now.fraction > other.fraction)) {
+            temp.integer = sub(now, other).integer;
+            temp.fraction = sub(now, other).fraction;
+            temp.sign = '-';
         }
         else {
             temp.integer=sub(other,now).integer;
