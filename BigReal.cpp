@@ -11,7 +11,6 @@ BigReal :: BigReal(){
 BigReal :: BigReal(double number){
     string num = to_string(number);
     num.pop_back();
-    cout << num <<"\n";
     int start;
     if(num[0] == '-'){
         sign ='-'; start = 1;
@@ -89,7 +88,6 @@ BigReal& BigReal :: operator= (const BigReal& other){
 bool BigReal :: ValidReal (string num){
     int positive = 0, negative = 0, dot = 0, digit = 0, charct = 0;
     int len = num.length();
-
     for(int i = 0; i < len; i++){
         if(num[i] == '+'){
             positive++;
