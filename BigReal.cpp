@@ -112,18 +112,18 @@ bool BigReal :: operator== (BigReal other){
 }
 //----------------------------------------------------------------------------------------------------------------------
 //function to do basic addition between two bigreals with the same sign
-BigReal BigReal :: sum(BigReal n1, BigReal n2){
+BigReal BigReal :: sum( BigReal n1, BigReal n2){
     int reminder=0;
     BigReal ans;
     //sum the fractions
     for(int i= n1.fraction.size()-1;i>=0 ;i--){
-        reminder= (n1.fraction[i]-'0')+(n1.fraction[i]-'0')+reminder;
+        reminder= (n1.fraction[i]-'0')+(n2.fraction[i]-'0')+reminder;
         ans.fraction= char((reminder%10)+'0')+ans.fraction;
         reminder/=10;
     }
     //sum the integers
     for(int i= n1.integer.size()-1;i>=0 ;i--){
-        reminder= (n1.integer[i]-'0')+(n1.integer[i]-'0')+reminder;
+        reminder= (n1.integer[i]-'0')+(n2.integer[i]-'0')+reminder;
         ans.integer= char((reminder%10)+'0')+ans.integer;
         reminder/=10;
     }
@@ -160,11 +160,38 @@ BigReal BigReal :: sub(BigReal n1, BigReal n2){
 //----------------------------------------------------------------------------------------------------------------------
 //operator overloading + to get the sum of two bigreals
 BigReal BigReal :: operator+(BigReal &other) {
-    BigReal temp;
+    BigReal temp,now;
+    now.sign=sign;
+    now.integer=integer;
+    now.fraction=fraction;
+
     while(integer.size()>other.integer.size())'0'+other.integer;
     while(integer.size()<other.integer.size())'0'+integer;
     while(fraction.size()>other.fraction.size())other.fraction+'0';
     while(fraction.size()<other.fraction.size())fraction+'0';
-
-
+    if(sign==other.sign){
+       sum(now,other)=temp;
+       temp.sign=sign;
+    }
+    else if(now.sign == '-' && other.sign=='+'){
+        if(other.integer[0] >= integer[0]){
+            sub(other,now)=temp;
+            temp.sign='+';
+        }
+        else {
+            sub(now,other)=temp;
+            temp.sign='-';
+        }
+    }
+    else if(now.sign == '+' && other.sign=='-'){
+        if(other.integer[0] > integer[0]){
+            sub(other,now)=temp;
+            temp.sign='-';
+        }
+        else {
+            sub(now,other)=temp;
+            temp.sign='+';
+        }
+    }
 }
+//----------------------------------------------------------------------------------------------------------------------
