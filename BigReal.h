@@ -16,6 +16,7 @@ public:
     bool operator>  (BigReal other);
     bool operator== (BigReal other);
     void print();
+    void same_len(BigReal& other);
 
 };
 
