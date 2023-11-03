@@ -165,33 +165,83 @@ BigReal BigReal :: operator+(BigReal &other) {
     now.integer=integer;
     now.fraction=fraction;
 
-    while(integer.size()>other.integer.size())'0'+other.integer;
-    while(integer.size()<other.integer.size())'0'+integer;
-    while(fraction.size()>other.fraction.size())other.fraction+'0';
-    while(fraction.size()<other.fraction.size())fraction+'0';
-    if(sign==other.sign){
-       sum(now,other)=temp;
-       temp.sign=sign;
+    while(now.integer.size()>other.integer.size())'0'+other.integer;
+    while(now.integer.size()<other.integer.size())'0'+now.integer;
+    while(now.fraction.size()>other.fraction.size())other.fraction+'0';
+    while(now.fraction.size()<other.fraction.size())now.fraction+'0';
+    if(now.sign==other.sign){
+       temp.integer=sum(now,other).integer;
+       temp.fraction=sum(now,other).fraction;
+       temp.sign=now.sign;
     }
     else if(now.sign == '-' && other.sign=='+'){
-        if(other.integer[0] >= integer[0]){
-            sub(other,now)=temp;
+        if(other.integer[0] >= now.integer[0]){
+            temp.integer=sub(other,now).integer;
+            temp.fraction=sub(other,now).fraction;
             temp.sign='+';
         }
         else {
-            sub(now,other)=temp;
+            temp.integer = sub(now,other).integer;
+            temp.fraction = sub(now,other).fraction;
             temp.sign='-';
         }
     }
     else if(now.sign == '+' && other.sign=='-'){
-        if(other.integer[0] > integer[0]){
-            sub(other,now)=temp;
+        if(other.integer[0] > now.integer[0]){
+            temp.integer=sub(other,now).integer;
+            temp.fraction=sub(other,now).fraction;
             temp.sign='-';
         }
         else {
-            sub(now,other)=temp;
+            temp.integer = sub(now,other).integer;
+            temp.fraction = sub(now,other).fraction;
             temp.sign='+';
         }
     }
+    return temp;
 }
 //----------------------------------------------------------------------------------------------------------------------
+//operator overloading + to get the sum of two bigreals
+BigReal BigReal :: operator-(BigReal &other) {
+    BigReal temp, now;
+    now.sign = sign;
+    now.integer = integer;
+    now.fraction = fraction;
+
+    while (now.integer.size() > other.integer.size())'0' + other.integer;
+    while (now.integer.size() < other.integer.size())'0' + now.integer;
+    while (now.fraction.size() > other.fraction.size())other.fraction + '0';
+    while (now.fraction.size() < other.fraction.size())now.fraction + '0';
+
+    if (now.sign != other.sign) {
+        temp.integer = sum(now, other).integer;
+        temp.fraction = sum(now, other).fraction;
+        temp.sign = '+';
+    }
+    else if(now.sign==other.sign=='+'){
+        if(now.integer[0] >= other.integer[0]){
+            temp.integer = sub(now,other).integer;
+            temp.fraction = sub(now,other).fraction;
+            temp.sign='+';
+        }
+        else {
+            temp.integer=sub(other,now).integer;
+            temp.fraction=sub(other,now).fraction;
+            temp.sign='-';
+        }
+    }
+    else if(now.sign==other.sign=='-'){
+        if(now.integer[0] > other.integer[0]){
+            temp.integer = sub(now,other).integer;
+            temp.fraction = sub(now,other).fraction;
+            temp.sign='-';
+        }
+        else {
+            temp.integer=sub(other,now).integer;
+            temp.fraction=sub(other,now).fraction;
+            temp.sign='+';
+        }
+    }
+    return temp;
+
+}
