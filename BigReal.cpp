@@ -157,15 +157,14 @@ BigReal BigReal :: sub(BigReal n1, BigReal n2){
     }
     return ans;
 }
+//----------------------------------------------------------------------------------------------------------------------
 //operator overloading + to get the sum of two bigreals
 BigReal BigReal :: operator+(BigReal &other) {
     BigReal temp;
-    int reminder=0;
     while(integer.size()>other.integer.size())'0'+other.integer;
     while(integer.size()<other.integer.size())'0'+integer;
     while(fraction.size()>other.fraction.size())other.fraction+'0';
     while(fraction.size()<other.fraction.size())fraction+'0';
-
 
 
 }
