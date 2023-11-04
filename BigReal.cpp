@@ -270,4 +270,42 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
     }
     return temp;
 
+}  
+bool BigReal ::operator>( BigReal& r) {
+    same_len(r) ;
+    integer = sign + integer ;
+    r.integer = r.sign + r.integer ;
+    if(integer[0] == '-' and r.integer[0] == '+') return false ;
+    if(integer[0] == '+' and r.integer[0] == '-') return true ;
+    if(integer == r.integer and fraction == r.fraction) return false ;
+    for(int i = 1 ; i < integer.size() ; ++i){
+        if(integer[i] > r.integer[i]) return true ;
+        else if(integer[i] < r.integer[i]) return false ;
+    }
+    for(int i = 1 ; i < fraction.size() ; ++i){
+        if(fraction[i] > r.integer[i]) return true ;
+        else if(integer[i] < r.integer[i]) return false ;
+    }
+    return true ;
+}
+bool BigReal ::operator<( BigReal& r)  {
+    same_len(r) ;
+    integer = sign + integer ;
+    r.integer = r.sign + r.integer ;
+    if(integer[0] == '-' and r.integer[0] == '+') return true ;
+    if(integer[0] == '+' and r.integer[0] == '-') return false ;
+    if(integer == r.integer and fraction == r.fraction) return true ;
+    for(int i = 1 ; i < integer.size() ; ++i){
+        if(integer[i] > r.integer[i]) return false ;
+        else if(integer[i] < r.integer[i]) return true ;
+    }
+    for(int i = 1 ; i < fraction.size() ; ++i){
+        if(fraction[i] > r.integer[i]) return false ;
+        else if(integer[i] < r.integer[i]) return true ;
+    }
+    return false ;
+}
+ostream &operator << (ostream &out , BigReal num){
+    out << num.sign <<  num.integer << num.fraction << endl;
+    return out ;
 }
