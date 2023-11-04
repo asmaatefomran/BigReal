@@ -34,13 +34,16 @@ BigReal :: BigReal(double number){
             fraction.push_back(num[i]);
         }
     }
-    if(ValidReal(num)){
-        cout <<"It's Real Number\n";
-    }
-    else cout <<"It's not a Real Number\n";
+
 }
 
 BigReal :: BigReal(string num){
+
+    if(!ValidReal(num)){
+        cout << "It's not a Real Number\n";
+        num = "0.0";
+    }
+
     int start;
     if(num[0] == '-'){
         sign ='-'; start = 1;
@@ -64,10 +67,7 @@ BigReal :: BigReal(string num){
             fraction.push_back(num[i]);
         }
     }
-    if(ValidReal(num)){
-        cout <<"It's Real Number\n";
-    }
-    else cout <<"It's not a Real Number\n";
+
 
 }
 
