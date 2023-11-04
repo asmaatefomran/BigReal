@@ -1,3 +1,9 @@
+// File: BigReal.cpp
+// Author:  Maya Fouad        Asmaa Atef        Fatma Ibrahim
+// ID:      20220270           20221020           20220242
+// TA: Mohamed Talaat Saad Farrag
+// Section: 19, 20
+// Date: 4 Nov 2023
 #include <bits/stdc++.h>
 #include "BigReal.h"
 using namespace std;
