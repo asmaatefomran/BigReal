@@ -17,11 +17,12 @@ public:
     BigReal sub(const BigReal n1, BigReal n2);
     BigReal  operator+(const BigReal& other);
     BigReal  operator-(const BigReal& other);
-    bool operator<  (BigReal other);
-    bool operator>  (BigReal other);
+    bool operator<(BigReal& r) ;
+    bool operator>(BigReal& r)  ;
     bool operator== (BigReal other);
     void print();
     void same_len(BigReal& other);
+    friend ostream &operator << (ostream &out , BigReal num) ;
 
 };
 
