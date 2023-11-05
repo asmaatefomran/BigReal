@@ -122,7 +122,8 @@ bool BigReal :: ValidReal (string num){
 }
 
 void BigReal :: print(){
-    cout << sign << integer << fraction <<"\n";
+    if(sign == '-') cout << sign ;
+    cout << integer << fraction <<"\n";
 }
 
 void BigReal :: same_len(BigReal& other){
@@ -276,7 +277,7 @@ BigReal BigReal :: operator-(const BigReal& otherr) {
     }
     return temp;
 
-}  
+}
 bool BigReal ::operator>( BigReal& r) {
     same_len(r) ;
     integer = sign + integer ;
@@ -312,6 +313,7 @@ bool BigReal ::operator<( BigReal& r)  {
     return false ;
 }
 ostream &operator << (ostream &out , BigReal num){
-    out << num.sign <<  num.integer << num.fraction << endl;
+    if(num.sign == '-') cout << num.sign ;
+    out << num.integer << num.fraction << endl;
     return out ;
 }
